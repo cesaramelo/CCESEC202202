@@ -16,7 +16,9 @@
 
 3. [Vetores](#vetores)
 
-4. [Lista Encadeda](#lista-encadeada)
+4. [String](#string)
+
+5. [Lista Encadeda](#lista-encadeada)
 
 ## Introdução
 
@@ -111,6 +113,81 @@ Espero que isso ajude a esclarecer como as structs podem ser úteis para lidar c
 
 ### Vetores
 
+Em programação, um vetor é uma estrutura de dados que armazena um conjunto de valores do mesmo tipo em uma única variável. Cada valor é identificado por um índice numérico que começa em zero e vai até o tamanho do vetor menos um.
+
+Por exemplo, imagine que precisamos armazenar as notas de uma turma de 10 alunos em uma variável. Uma forma de fazer isso seria declarar 10 variáveis separadas, mas isso seria muito trabalhoso e pouco prático. É aí que os vetores entram em cena! Podemos declarar um vetor de 10 elementos do tipo double (números decimais), como:
+
+    double notas[10];
+
+Este vetor armazena 10 valores do tipo double. Para acessar um elemento específico do vetor, usamos um índice entre colchetes após o nome do vetor. Por exemplo, para atribuir a nota 7.5 ao primeiro aluno, fazemos:
+
+    notas[0] = 7.5;
+
+É importante lembrar que o índice começa em zero, então o primeiro elemento do vetor é o de índice zero. Para acessar o segundo elemento do vetor, usamos o índice 1:
+
+    notas[1] = 8.0;
+
+E assim por diante. Para acessar o último elemento do vetor, usamos o índice igual ao tamanho do vetor menos um:
+
+    notas[9] = 9.0;
+
+Podemos inicializar o vetor com valores conhecidos utilizando a sintaxe de inicialização de vetor. Por exemplo, para inicializar o vetor com as notas de um aluno, fazemos:
+
+    double notas[4] = {7.5, 8.0, 9.0, 7.0};
+
+Neste caso, estamos inicializando o vetor com 4 valores. O compilador C sabe que o tamanho do vetor é 4 porque contou o número de valores na inicialização.
+
+Podemos percorrer todos os elementos do vetor utilizando um laço de repetição. Por exemplo, para imprimir todas as notas do vetor, podemos fazer:
+
+```
+for (int i = 0; i < 4; i++) {
+    printf("Nota %d: %.1lf\n", i+1, notas[i]);
+}
+```
+
+Neste caso, estamos utilizando um laço for que vai de 0 até 3 (o tamanho do vetor menos um) e imprime o índice do elemento e o valor da nota correspondente. O formato "%.1lf" é utilizado para imprimir o valor da nota com uma casa decimal.
+
+Os vetores são uma estrutura de dados muito importante em programação, e são amplamente utilizados para armazenar grandes quantidades de dados em uma única variável. Eles são muito úteis em algoritmos de busca, ordenação, processamento de imagens, entre outras aplicações.
+
+### String
+
+Uma string é uma sequência de caracteres que representa um texto ou uma mensagem. Em C, uma string é representada como um vetor de caracteres (array), onde cada elemento do vetor é um caractere da string. O último caractere do vetor é sempre o caractere nulo ('\0'), que indica o fim da string.
+
+Por exemplo, para declarar uma string que contém o texto "Olá, mundo!", podemos fazer:
+
+    char mensagem[13] = "Olá, mundo!";
+
+Neste caso, estamos declarando um vetor de caracteres chamado "mensagem" que tem tamanho 13 (12 caracteres mais o caractere nulo). É importante lembrar que a string sempre ocupa um caractere a mais do que o tamanho do texto, para armazenar o caractere nulo.
+
+Podemos acessar os caracteres da string utilizando um índice entre colchetes. Por exemplo, para imprimir o primeiro caractere da string, fazemos:
+
+    printf("Primeiro caractere: %c\n", mensagem[0]);
+
+Neste caso, estamos utilizando o formato "%c" para imprimir o caractere correspondente ao índice 0 do vetor.
+
+Podemos percorrer todos os caracteres da string utilizando um laço de repetição. Por exemplo, para imprimir todos os caracteres da string, podemos fazer:
+
+```
+for (int i = 0; i < 13; i++) {
+    printf("%c", mensagem[i]);
+}
+```
+
+Neste caso, estamos utilizando um laço for que vai de 0 até 12 (o tamanho do vetor menos um) e imprime cada caractere da string. O formato "%c" é utilizado para imprimir cada caractere individualmente.
+
+Outra forma possível e mais usada é com o formatodor "%s":
+
+    printf("%s", mensagem);
+
+Podemos modificar os caracteres da string atribuindo um valor a um elemento do vetor. Por exemplo, para alterar o último caractere da string para o caractere '?', fazemos:
+
+    mensagem[12] = '!';
+
+Neste caso, estamos atribuindo o caractere '?' ao último elemento do vetor.
+
+Existem várias funções úteis para manipulação de strings em C, como strlen() para obter o comprimento da string, strcpy() para copiar uma string para outra, strcat() para concatenar duas strings, entre outras.
+
+É importante lembrar que as strings em C são arrays de caracteres, e por isso é fácil cometer erros de buffer overflow (quando se escreve além do espaço reservado para o vetor), especialmente ao manipular strings de tamanho desconhecido. Para evitar esse tipo de erro, é importante sempre verificar o tamanho da string antes de realizar operações com ela, e utilizar funções que garantem a segurança da operação, como strncpy() em vez de strcpy().
 ### Lista Encadeada
 
 Lista
