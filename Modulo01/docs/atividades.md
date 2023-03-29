@@ -62,3 +62,9 @@ Um vetor __V__ de inteiros foi divido em duas partes indexadas pelas variávies 
 
 Considere o vetor __V__ = {10,17,21,7,11,28}, k=0, l=2, e m = 5. Então as parte de __V__ serão __V[k,l]__={10,17,21} e __V[l+1,m]__ = {7,11,28}. Então o programa deve gerar um __V__ = {7,10,11,17,21,28}.
 
+---
+
+```
+
+
+```
