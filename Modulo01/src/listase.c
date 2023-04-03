@@ -51,3 +51,4 @@ void inserir_inicio_lse(t_lse* lse, int carga){
 // acessar_lse(){}
 // void inserir_final_lse(){}
 // int remover_final_lse(){}
+
