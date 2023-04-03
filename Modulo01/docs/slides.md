@@ -31,11 +31,18 @@ Uma lista $L$ com $n$ elementos tem as seguintes propriedades:
 
 
 ----
-# Representação
+# Representação Gráfica
 
+![Representa](imgs/representa.svg "Representação")
 
-______
+---
+# Playlist de música 
 
-
-
+1. As últimas músicas tocadas
+    * Como a lista será organizada?
+    * Onde deve ocorrer as inserções?
+2. As músicas mais tocadas
+    * Na sua conta?
+    * Tem um limite?
+    * Quem deve sair em uma lista com as 10+ tocadas?
 
