@@ -33,9 +33,21 @@ Uma lista $L$ com $n$ elementos tem as seguintes propriedades:
 ----
 # Representação Gráfica
 
-![Representa](imgs/representa.svg "Representação")
+![width:1000px](imgs/representa.svg)
 
 ---
+# Elemento da Lista
+1. __Representação__ 
+![width:350px](imgs/elemento_lse.svg)
+2. __Definição__                           
+```C                                                        
+ typedef struct elem_lse{                          
+    int cargautil;// carga util            
+    struct elem_lse* prox;// endereco prox 
+ } t_elemento_lse;                                        
+ ```                                       
+
+----
 # Playlist de música 
 
 1. As últimas músicas tocadas
@@ -46,3 +58,12 @@ Uma lista $L$ com $n$ elementos tem as seguintes propriedades:
     * Tem um limite?
     * Quem deve sair em uma lista com as 10+ tocadas?
 
+---
+# Operações Posicionais: Inserir
+
+1. Instanciar um novo elemento da lista
+    * O elemento tem __carga util__ e __endereço do sucessor__
+2. Redefinir o inicio
+    * __Novo elemento__ deve ser conectado à lista
+    * o campo inicio da lista   
+3. Atualizar a quantidade de elementos
