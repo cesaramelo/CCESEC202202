@@ -87,4 +87,9 @@ Implementar as operações de __remoção__ do inicio da lista e no final da lis
 2. Remoção do elemento no final da lista pode tornar a lista vazia.
     * O que fazer?
 
+----
+# Atividade: Generalização.
 
+
+----
+# Lista: 
