@@ -147,38 +147,36 @@ t_musica* criar_musica(char nome[], int duracao, char genero[]){
     return musica;
 }   
 
-typedef struct album{
-    int ano;
-    char nome[60];
-    char nome_da_gravadora[60];
-    char nome_artista[60];
-}t_album;
 
-
-t_album* criar_album(){
-
-} 
 int main(){
     t_lse* musicas = criar_lse();
-    t_lse* as_mais_tocadas = criar_lse();
-    t_lse* meus_albuns = criar_lse();
+    char nome[60], genero[30];
+    int duracao;
 
     for(int i=1;i<10;i++ ){
+        scanf("%s", nome);
+        scanf("%s", genero);
+        scanf("%d", &duracao);
+        t_musica* m = criar_musica(nome, duracao, genero);
 //        inserir_inicio_lse(musicas, i);
-        inserir_final_lse(musicas, i);
+        inserir_final_lse(musicas, m);
     }
 
-    //int musica = remover_inicio_lse(musicas);
+    t_musica*  musica_inicio = remover_inicio_lse(musicas);
     //printf("removeu: %d\n", musica);
+    free(musica_inicio);
+    
+    t_musica* musica_ult = remover_final_lse(musicas);
+    //printf("removeu: %d\n", musica_ult);
+    free(musica_ult);
 
-    int musica = remover_final_lse(musicas);
-    printf("removeu: %d\n", musica);
+    t_musica* segunda = acessar_lse(musicas, -2);
+    //printf("acessou: %d\n", segunda);
+    free(segunda);
 
-    musica = acessar_lse(musicas, -2);
-    printf("acessou: %d\n", musica);
-
-    musica = acessar_lse(musicas, 15);
-    printf("acessou: %d\n", musica);
+    t_musica* outra_musica = acessar_lse(musicas, 15);
+    //printf("acessou: %d\n", outra_musica);
+    free(outra_musica);
 
     return 0;
 
