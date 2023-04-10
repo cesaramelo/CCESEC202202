@@ -214,12 +214,15 @@ void __trocar(int *nro1, int* nro2){
     aux = *nro1;
     *nro1 = *nro2;
     *nro2 = aux;
+    printf("trocar 1\n");
 }
 ```
 2) Agora defina uma função __main()__ com o seguinte código:
 ```C
 int main(){
+    int maior=10, menor=20;
     printf("%p",__trocar);
+    __trocar(&maior,&menor);
 }
 ```
 3) Compile e execute o código 5x e veja o que acontece.
@@ -271,12 +274,13 @@ void chamadora(da_funcao_trocar trocador, int nro_1, int nro_2){
     printf("%d %d\n", nro_1, nro_2);
     // chamada indireta da função
     trocador(&nro_1, &nro_2);
-    printf("%d %d\n", nro_1, nro_2);
+    //printf("%d %d\n", nro_1, nro_2);
 }
 ```
 2) Inclua o seguinte código na função __main()__
 ```C
 chamadora(__trocar, maior, menor);
+chamadora(__trocar2, maior, menor);
 ```
 ---
 # E na LSE? vamos refatorar.

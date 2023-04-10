@@ -1,5 +1,7 @@
 #include "stdio.h"
 #include "stdlib.h"
+#include "string.h"
+#include "listase.h"
 
 /* Tipo elemento da LSE*/
 typedef struct elem_lse t_elemento_lse;
@@ -16,7 +18,7 @@ t_elemento_lse* criar_elemento_lse(void* cargautil){
     novo->cargautil = cargautil;
     novo->prox = NULL;
 
-    printf("Criando: %p %d %p\n", novo, novo->cargautil, novo->prox);
+    printf("Criando: %p %p %p\n", novo, novo->cargautil, novo->prox);
 
     return novo;
 }
@@ -24,19 +26,21 @@ t_elemento_lse* criar_elemento_lse(void* cargautil){
 /**
  * Definição do tipo Lista Simplesmente Encadeada
 */
-typedef struct lse{
+struct lse{
     t_elemento_lse* inicio; // Primeiro elemento
-    int tamanho; 
+    int tamanho;
+    t_imprimir_lse impressora; 
     // int nro_ins;
     // int nro_del;
-}t_lse;
+};
 
-t_lse* criar_lse(){
+t_lse* criar_lse(t_imprimir_lse impressora){
      t_lse* nova;
      
     nova  = malloc(sizeof(t_lse));
     nova->inicio = NULL;
     nova->tamanho=0;
+    nova->impressora = impressora;
 
     return nova;
 }
@@ -126,58 +130,12 @@ void* remover_final_lse(t_lse* lse){
     return carga;
 }
 
+void imprimir_lse(t_lse *lse){
+    t_elemento_lse* cam = lse->inicio;
+    while(cam!=NULL){
+        lse->impressora(cam->cargautil);
+        cam = cam->prox;
+    } 
+}
 // Lista no contexto neutralizado (genérico)
 
-//----------
-
-// Contexto especialista
-typedef struct musica{
-    char nome[60];
-    int duracao_seg;
-    char genero[30];
-}t_musica;
-
-t_musica* criar_musica(char nome[], int duracao, char genero[]){
-    t_musica* musica = malloc(sizeof(t_musica));
-
-    musica->duracao_seg = duracao;
-    strcpy(musica->genero, genero);
-    strcpy(musica->nome, nome);
-
-    return musica;
-}   
-
-
-int main(){
-    t_lse* musicas = criar_lse();
-    char nome[60], genero[30];
-    int duracao;
-
-    for(int i=1;i<10;i++ ){
-        scanf("%s", nome);
-        scanf("%s", genero);
-        scanf("%d", &duracao);
-        t_musica* m = criar_musica(nome, duracao, genero);
-//        inserir_inicio_lse(musicas, i);
-        inserir_final_lse(musicas, m);
-    }
-
-    t_musica*  musica_inicio = remover_inicio_lse(musicas);
-    //printf("removeu: %d\n", musica);
-    free(musica_inicio);
-    
-    t_musica* musica_ult = remover_final_lse(musicas);
-    //printf("removeu: %d\n", musica_ult);
-    free(musica_ult);
-
-    t_musica* segunda = acessar_lse(musicas, -2);
-    //printf("acessou: %d\n", segunda);
-    free(segunda);
-
-    t_musica* outra_musica = acessar_lse(musicas, 15);
-    //printf("acessou: %d\n", outra_musica);
-    free(outra_musica);
-
-    return 0;
-
-}
