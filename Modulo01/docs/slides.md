@@ -163,20 +163,20 @@ int remover_final_lse(t_lse* lse);
 # Neutralização da LSE: Implementação
 
 1. Trocar todos as referências do __int__ para __void*__;
-2. Criar as cargas que serão armazenadas __no código__ de quem está usando a Lista;
-    * Especialização fica na solução (__usa*__);
+2. Criar as cargas __no código__ de quem está usando a Lista;
+    * Especialização fica na solução (__minhasolucao.c__);
 3. Qualquer solução deve passar a referência (__endereço memória__) da carga que vai na lista;
-    * Implemente uma função (__criar_*__)para instanciar a carga
+    * Implemente uma função (__criar*__)para instanciar a carga;
 4. Qualquer solução deve saber tratar a referência (__endereço de memória__)
-    * Implemente uma função (__imprimir_*__) para imprimir a carga 
+    * Implemente uma função (__imprimir*__) para imprimir a carga; 
 
 ---
 # Neutralização da ED LSE: Casos de Uso.
 
 Considere a criação das seguintes Listas:
-1. __matricula__, __notafinal__, __nro_faltas__.
-2. __coordenadaX__, __coordenadaY__, __temperatura__.
-3. __hora__, __minuto__, __segundo__, __nro_evento__ $\in [1,5]$ 
+1. Lista de alunos da disciplina: __matricula__(int), __notafinal__(double), __nro_faltas__(int).
+2. Lista de medidas de temperatura: __coordenadaX__(double), __coordenadaY__(double), __temperatura__(double).
+3. Lista de eventos: __hora__(int), __minuto__(int), __segundo__(int), __nro_evento__(int) $\in [1,5]$ 
 
 ---
 # Operações baseadas em conteúdo
