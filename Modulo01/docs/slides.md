@@ -1,6 +1,14 @@
 ---
 marp: true
 title: Sobre listas
+style: |
+    section{
+      justify-content: flex-start;
+    }
+    img[alt~="center"] {
+      display: block;
+      margin: 0 auto;
+    }
 ---
 # Sobre Lista
 
@@ -31,12 +39,12 @@ Uma lista $L$ com $n$ elementos tem as seguintes propriedades:
 
 
 ----
-# LSE - Lista Simplemente Encadeada
-1) Representação Gráfica
+# Lista Simplemente Encadeada
 
-![width:1000px](imgs/representa.svg)
 
-2) Implementação
+![width:600px center](imgs/representa.svg)
+
+
 ```C
 typedef struct {
     t_elemento_lse* inicio;
@@ -45,9 +53,9 @@ typedef struct {
 ```
 ---
 # Elemento da Lista
-1. __Representação__ 
-![width:350px](imgs/elemento_lse.svg)
-2. __Definição__                           
+![width:350px center](imgs/elemento_lse.svg)
+
+
 ```C                                                        
  typedef struct elem_lse{                          
     int cargautil;// carga util            
@@ -283,6 +291,10 @@ chamadora(__trocar, maior, menor);
 chamadora(__trocar2, maior, menor);
 ```
 ---
+# e na LSE? Visão geral
+![bg right w:600px](imgs/refactor-lse.svg)
+
+---
 # E na LSE? vamos refatorar.
 ![width:25cm](imgs/refatorar.svg)
 
@@ -329,6 +341,67 @@ void imprimir_lse(t_lse *lse){
     }
 }
 ```
+---
+# A sequência de chamadas na impressão
+![w:600px center](imgs/imprimir_lse.svg)
+
+---
+# Inserir, Remover e Buscar baseado em conteúdo
+1) Reconhecer o acomplamento da lógica ao tipo de dados;
+2) Criar novas funções neutralizando as lógicas;
+3) Criar um novo tipo Ponteiro para função;
+4) Reimplementar a função que cria a lista;
+---
+# Alteração nas declarações (listase.h)
+```C
+typedef int (*t_comparar_lse)(void* carga_na_lista, void* nova_carga);
+
+t_lse* criar_lse(t_imprimir_lse imprimir, t_comparar_lse comparar);
+```
+
+---
+# Alteração no tipo LSE (listase.c)
+```C
+struct lse{
+    t_elemento_lse* inicio; // Primeiro elemento
+    int tamanho;
+    t_imprimir_lse impressora; 
+    t_comparar_lse comparar;
+};
+```
+```C
+t_lse* criar_lse(t_imprimir_lse impressora, t_comparar_lse comparar){
+    t_lse* nova  = malloc(sizeof(t_lse));
+    nova->inicio = NULL;
+    nova->tamanho=0;
+    nova->impressora = impressora;
+    nova->comparar = comparar;
+
+    return nova;
+}
+```
+---
+# Inserir um novo elemento
+1) Encontrar a posição da inserção 
+2) Caracterizar a posição
+    * inicio
+    * fim
+    * meio
+3) Conectar o novo elemento
+4) Atualizar a lista se for o caso
+![bg w:650px right](imgs/inserir_lse.svg)
+---
+# Buscar um novo elemento
+1) Percorrer a lista;
+2) Dois resultados são possíveis
+    * Pertence à lista
+    * Não pertence à lista
+![bg w:650px right](imgs/buscar_lse.svg)    
+---
+# Remover um elemento
+1) Buscar um elemento
+2) Caracterizar a sua posição
+
 
 ---
 # Atividade: criando e manipulando playlists
