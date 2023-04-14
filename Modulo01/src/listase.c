@@ -30,17 +30,17 @@ struct lse{
     t_elemento_lse* inicio; // Primeiro elemento
     int tamanho;
     t_imprimir_lse impressora; 
-    // int nro_ins;
-    // int nro_del;
+    t_comparar_lse comparar;
 };
 
-t_lse* criar_lse(t_imprimir_lse impressora){
+t_lse* criar_lse(t_imprimir_lse impressora, t_comparar_lse comparar){
      t_lse* nova;
      
     nova  = malloc(sizeof(t_lse));
     nova->inicio = NULL;
     nova->tamanho=0;
     nova->impressora = impressora;
+    nova->comparar = comparar;
 
     return nova;
 }
@@ -136,6 +136,65 @@ void imprimir_lse(t_lse *lse){
         lse->impressora(cam->cargautil);
         cam = cam->prox;
     } 
+}
+
+void inserir_lse(t_lse* lse, void* nova_carga){
+    t_elemento_lse* cam = lse->inicio;
+    t_elemento_lse* ant=NULL;
+
+    lse->tamanho++;
+    t_elemento_lse* novo = criar_elemento_lse(nova_carga);
+    if (lse->inicio == NULL){ // lista vazia
+       lse->inicio = novo;
+    }else{
+        while( (cam!=NULL) && (lse->comparar(cam->cargautil, nova_carga)<0)){
+            ant = cam;
+            cam = cam->prox;
+        }
+        // inicio
+        if(cam == lse->inicio){
+            novo->prox = cam;
+            lse->inicio = novo;
+        }else{
+            ant->prox = novo;
+            novo->prox = cam;
+        }
+    }
+}
+
+void* buscar_lse(t_lse* lse, void* chave){
+    t_elemento_lse* cam=lse->inicio;
+
+    while( (cam!=NULL) && (lse->comparar(cam->cargautil, chave)!=0)){
+        cam = cam->prox;
+    }
+    if (cam != NULL)
+        return cam->cargautil;
+    else
+        return NULL;
+}
+
+void* remover_lse(t_lse* lse, void* chave){
+    t_elemento_lse* cam = lse->inicio;
+    t_elemento_lse* ant = NULL;
+    
+    while( (cam!=NULL) && (lse->comparar(cam->cargautil , chave)!=0)){
+        ant = cam;
+        cam = cam->prox;
+    }
+
+    void* carga = NULL;
+    if (cam != NULL){
+        carga = cam->cargautil;
+        if (cam == lse->inicio){ // inicio?
+            lse->inicio = cam->prox;
+        }else{
+        ant->prox = cam->prox;
+        }
+        free(cam);
+    }
+    return carga; 
+
 }
 // Lista no contexto neutralizado (genérico)
 

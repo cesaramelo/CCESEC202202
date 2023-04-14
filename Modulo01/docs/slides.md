@@ -323,7 +323,7 @@ struct lse{
     t_lse* criar_lse(t_imprimir_lse imprimir){
         t_lse* nova  = malloc(sizeof(t_lse));
         nova->inicio = NULL;
-        nova->imprimir = imprimir;
+        nova->impressora = imprimir;
         nova->tamanho=0;
 
         return nova;
@@ -334,9 +334,9 @@ struct lse{
 1) Inclua o código que percorre a lista imprimindo os elementos.
 ```C
 void imprimir_lse(t_lse *lse){
-    t_elemento_lse* cam;
+    t_elemento_lse* cam = lse->inicio;
     while(cam!=NULL){
-        lse->imprimir(cam->cargautil);
+        lse->impressora(cam->cargautil);
         cam = cam->prox;
     }
 }
