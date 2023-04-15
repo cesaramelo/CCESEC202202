@@ -14,8 +14,8 @@ As medidas relacionadas a __temperatura__ têm os seguintes atributos:
 ```json
 {  seq :inteiro,
    dia:inteiro,
-   hora:inteiro,
-   minuto:inteiro,
+   mes:inteiro,
+   ano:inteiro,
    hora:inteiro,
    minuto:inteiro,
    radiacao_solar:inteiro,
@@ -29,8 +29,8 @@ As medidas relacionadas as massas de ar têm os seguintes atributos:
 ```json
 {  seq:inteiro,
    dia:inteiro,
-   hora:inteiro,
-   minuto:inteiro,
+   mes:inteiro,
+   ano:inteiro,
    hora:inteiro,
    minuto:inteiro,
    velocidade_media:double,
