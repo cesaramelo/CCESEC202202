@@ -81,9 +81,13 @@ A seguir você vai ver algumas dicas de como a linguagem C dá suporte a leitura
 
 ```C
 #include "stdio.h"
-int main(char *argv[], int argc){
-   int tipo = (int)(argv[1]);
-   char nome_arquivo = argv[2];
+#include "listase.h"
+
+int main(int argc, char const *argv[]){
+   
+   const int tipo = (int) argv[1][0]-48;
+
+   const char* nome_arquivo = argv[2];
 
    FILE *arq = fopen(nome_arquivo, "r");
 
@@ -95,3 +99,17 @@ int main(char *argv[], int argc){
 1. Instanciar a lista para o tipo de medição informado
 2. Ler e armazenar todas as informações do arquivo na lista
 3. Processar todos os comandos Conforme indicado na seção "O que fazer?"
+
+### Exemplos
+
+![exemplo01](imgs/exemplo01.png  "Exemplo01")
+
+O Exemplo acima mostra a utilização das funções I, R e F.
+
+![exemplo03](imgs/exemplo02.png  "Exemplo02")
+
+O Exemplo acima mostra a utilização das funções I, P e F.
+
+![exemplo03](imgs/exemplo03.png  "Exemplo03")
+
+O Exemplo acima mostra a utilização das funções I, A, B, E e F.
