@@ -85,7 +85,7 @@ A seguir você vai ver algumas dicas de como a linguagem C dá suporte a leitura
 
 int main(int argc, char const *argv[]){
    
-   const int tipo = (int) argv[1][0]-48;
+   const int tipo = atoi(argv[1]);
 
    const char* nome_arquivo = argv[2];
 

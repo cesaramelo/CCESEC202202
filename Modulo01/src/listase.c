@@ -192,6 +192,7 @@ void* remover_lse(t_lse* lse, void* chave){
         ant->prox = cam->prox;
         }
         free(cam);
+        lse->tamanho--;
     }
     return carga; 
 
