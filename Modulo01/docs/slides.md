@@ -397,10 +397,17 @@ t_lse* criar_lse(t_imprimir_lse impressora, t_comparar_lse comparar){
     * Pertence à lista
     * Não pertence à lista
 ![bg w:650px right](imgs/buscar_lse.svg)    
+
 ---
 # Remover um elemento
+![bg w:650px right](imgs/remover_lse.svg)
 1) Buscar um elemento
 2) Caracterizar a sua posição
+    * inicio da lista
+    * demais elementos
+3) Exceções
+    - Remover o único elemento da lista;
+    - Remover em uma lista vazia
 
 
 ---
@@ -413,4 +420,16 @@ t_lse* criar_lse(t_imprimir_lse impressora, t_comparar_lse comparar){
     * Defina o conceito de uma playlist as últimas **k* tocadas;
 
 ---
+# Fechamento
+
+![w:22cm center](imgs/visao-geral.svg)
+
+---
+# Tipos Abstratos de Dados
+
+1. Definição
+2. Como são implementados
+3. Exemplos de uso
+4. 
+
 # 
