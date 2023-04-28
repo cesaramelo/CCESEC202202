@@ -18,12 +18,16 @@ static void trocar(void* elem[], int i, int j){
 }
 
 static void desce_no_heap(t_heap* h, int k){
+
     int imaior = k;
-    if ((2*k+1<h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[2*k+1])<0)){
-        imaior = 2*k+1;
+    int childrenLeft = (k*2) + 1;
+    int childrenRight = (k*2) + 2;
+    
+    if ((childrenLeft < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[childrenLeft])<0)){
+        imaior = childrenLeft;
     }
-    if ((2*k+2<h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[2*k+2])<0)){
-        imaior = 2*k+2;
+    if ((childrenRight < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[ childrenRight ])<0)){
+        imaior = childrenRight;
     }
     if (imaior!=k){
         trocar(h->elem, k, imaior);
@@ -33,7 +37,9 @@ static void desce_no_heap(t_heap* h, int k){
 }
 
 static void sobe_no_heap(t_heap* h, int k){
-    int kancestral=(k/2.0)-1;
+    
+    int kancestral= (k-1)/2;
+
     if ((kancestral>=0)&&(h->comparar(h->elem[kancestral],h->elem[k])<0)){
         trocar(h->elem, k, kancestral);
         sobe_no_heap(h, kancestral);
@@ -42,7 +48,7 @@ static void sobe_no_heap(t_heap* h, int k){
 
 static void heapifica(t_heap* heap){
     int n = heap->ocupacao;
-    int k = (n/2.0)-1;
+    int k = (n-1)/2;
 
     do{
         desce_no_heap(heap,k);
@@ -64,13 +70,19 @@ t_heap* criar_heap(int tam, TCompararHeap comparar){
 }
 
 int inserir_heap(t_heap* h, void* elem){
+
     int inseriu = popular_heap(h, elem);
+    
     if (inseriu)
         sobe_no_heap(h,h->ocupacao-1);
+    
     return inseriu;
 }
 
 void* remover_heap(t_heap* h){
+
+    if(h->ocupacao <= 0) return NULL; // Se a fila estiver vazia nem continua.
+
     trocar(h->elem, 0, h->ocupacao-1);
     h->ocupacao--;
     desce_no_heap(h,0);
