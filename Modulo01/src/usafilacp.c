@@ -22,7 +22,7 @@ int compararCarro(void* c1, void* c2){
     t_carro* cc1 = c1;
     t_carro* cc2 = c2;
 
-    return strcmp(cc2->placa, cc1->placa);
+    return strcmp(cc1->placa, cc2->placa);
 }
 
 void destroy_carro(t_carro *c){
