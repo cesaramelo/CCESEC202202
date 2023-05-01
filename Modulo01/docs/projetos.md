@@ -163,7 +163,7 @@ static void desce_no_heap(t_heap* h, int k){
 }
 
 static void sobe_no_heap(t_heap* h, int k){
-    int kancestral=(k/2.0)-1;
+    int kancestral=(k-1)/2;
    
     h->nro_cmp_ins++; // contando na inserção
     if ((kancestral>=0)&&(h->comparar(h->elem[kancestral],h->elem[k])<0)){
