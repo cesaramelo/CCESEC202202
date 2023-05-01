@@ -93,3 +93,6 @@ Implementar as operações de __remoção__ do inicio da lista e no final da lis
 
 ----
 # Lista: 
+
+----
+# 
