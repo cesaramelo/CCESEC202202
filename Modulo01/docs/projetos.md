@@ -115,7 +115,9 @@ O Exemplo acima mostra a utilização das funções I, P e F.
 O Exemplo acima mostra a utilização das funções I, A, B, E e F.
 
 
-## Uso de TAD - Tipo Abstrato de Dados
+
+
+# Uso de TAD - Tipo Abstrato de Dados
 
 Neste trabalho você precisará implementar as três possibilidades de representar uma fila com prioridade, isto é: 
 - Container (vetor/lista) não ordenado
@@ -242,14 +244,14 @@ nro comparações primeiro:
 
 ## Nomeclaturas
 
-Nome os arquivos conforme indicado abaixo:
+Nomei os arquivos conforme indicado abaixo:
 - vordenado.c e vordenado.h
 - vnordenado.c e vnordenado.h
 - heap.c e heap.h
 
-para cada um dessas implementações você precisa implementar uma solução que faça uso:
+para cada uma dessas implementações, implemente uma solução com os seguintes nomes:
 - usaordenado.c
-- usavordenado.c
+- usavnordenado.c
 - usaheap.c
 
 Para as soluções que você implementar, use as seguintes definições:
@@ -288,5 +290,5 @@ void imprimir_carro(t_carro* c){
 }
 ```
 
-Implemente uma dinâmica de leitura de dados e de uso dos dados que foram armazenados, permitindo que as operações de inserção e remoção ocorram na estrutura, permitindo que você verifique as diferenças, em termos de comparação, entre as três implementações.
+Implemente nas soluções uma dinâmica de leitura e de uso dos dados, permitindo que as operações de inserção e remoção ocorram na estrutura, e que você verifique as diferenças, em termos de números de comparação entre elementos, que as três implementações solicitadas apresentam.
 

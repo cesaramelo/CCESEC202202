@@ -1,6 +1,11 @@
 #include "stdlib.h"
 #include "stdio.h"
-#include "heap.h"
+#include "heapsort.h"
+
+typedef struct heap t_heap;
+
+t_heap* criar_heap(int tam, TCompararHeap comparar);
+int popular_heap(t_heap* h, void* elem);
 
 struct heap{
     void* *elem;
@@ -36,16 +41,6 @@ static void desce_no_heap(t_heap* h, int k){
 
 }
 
-static void sobe_no_heap(t_heap* h, int k){
-    
-    int kancestral= (k-1)/2;
-
-    if ((kancestral>=0)&&(h->comparar(h->elem[kancestral],h->elem[k])<0)){
-        trocar(h->elem, k, kancestral);
-        sobe_no_heap(h, kancestral);
-    }
-}
-
 static void heapifica(t_heap* heap){
     int n = heap->ocupacao;
     int k = (n-1)/2;
@@ -69,21 +64,6 @@ t_heap* criar_heap(int tam, TCompararHeap comparar){
     return h;
 }
 
-void heapsort(t_heap* h){
-
-    heapifica(h); // construir o heap
-    do{ // restabelecer a prop ordem 
-        trocar(h->elem,0,h->ocupacao); // ordenando
-        h->ocupacao--;
-        desce_no_heap(h,0); // estabelece a ordem
-    }while(h->ocupacao>1);
-
-    
-}
-
-void* raiz_heap(t_heap* h){
-    return (h->ocupacao==0?NULL:h->elem[0]);
-}
 
 int popular_heap(t_heap* h, void* elem){
     int status = 0; // fals0
@@ -100,10 +80,31 @@ int popular_heap(t_heap* h, void* elem){
     return status;
 }
 
-int ocupacao_heap(t_heap* h){
-    return h->ocupacao;
+void destroy_heap(t_heap* h){
+    free(h->elem);
+    free(h);
 }
 
-int tamanho_heap(t_heap* h){
-    return h->tamanho;
+void heapsort(void* vetor[], int tam, TCompararHeap comparar){
+
+    t_heap* h = criar_heap(tam, comparar);
+    
+    for(int i=0;i<tam;i++){
+        popular_heap(h, vetor[i]);
+    }
+
+    heapifica(h); // construir o heap
+
+    do{ // restabelecer a prop ordem 
+        trocar(h->elem,0,h->ocupacao); // ordenando
+        h->ocupacao--;
+        desce_no_heap(h,0); // estabelece a ordem
+    }while(h->ocupacao>1);
+
+    for(int i=0;i<tam;i++){
+        vetor[i] = h->elem[i];
+    }
+
+    destroy_heap(h);
 }
+
