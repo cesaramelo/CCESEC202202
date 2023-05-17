@@ -1,4 +1,4 @@
-typedef int(*TCompararHeap)(void*, void*);
+typedef int(*TCompararHeapsort)(void*, void*);
 
-void heapsort(void* vetor[], int tam, TCompararHeap comparar);
+void heapsort(void* vetor[], int tam, TCompararHeapsort comparar);
 

@@ -4,7 +4,7 @@
 
 typedef struct heap t_heap;
 
-t_heap* criar_heap(int tam, TCompararHeap comparar);
+t_heap* criar_heap(int tam, TCompararHeapsort comparar);
 int popular_heap(t_heap* h, void* elem);
 
 struct heap{
@@ -13,7 +13,7 @@ struct heap{
     int tamanho;
     int e_infinito;
 
-    TCompararHeap comparar;
+    TCompararHeapsort comparar;
 };
 
 static void trocar(void* elem[], int i, int j){
@@ -52,7 +52,7 @@ static void heapifica(t_heap* heap){
     }while(k>0);
 }
 
-t_heap* criar_heap(int tam, TCompararHeap comparar){
+t_heap* criar_heap(int tam, TCompararHeapsort comparar){
     t_heap* h = malloc(sizeof(t_heap));
     h->tamanho = (tam>0?tam:2);
     h->e_infinito = (tam<=0?1:0);
@@ -85,7 +85,7 @@ void destroy_heap(t_heap* h){
     free(h);
 }
 
-void heapsort(void* vetor[], int tam, TCompararHeap comparar){
+void heapsort(void* vetor[], int tam, TCompararHeapsort comparar){
 
     t_heap* h = criar_heap(tam, comparar);
     
