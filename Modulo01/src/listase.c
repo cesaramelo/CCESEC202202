@@ -27,7 +27,9 @@ t_elemento_lse* criar_elemento_lse(void* cargautil){
  * Definição do tipo Lista Simplesmente Encadeada
 */
 struct lse{
+
     t_elemento_lse* inicio; // Primeiro elemento
+    t_elemento_lse* fim;
     int tamanho;
     t_imprimir_lse impressora; 
     t_comparar_lse comparar;
@@ -97,12 +99,15 @@ void inserir_final_lse(t_lse* lse, void* carga){
     t_elemento_lse* novo = criar_elemento_lse(carga);
     if(lse->tamanho == 0){ // lse->inicio == NULL
         lse->inicio = novo;
+        lse->fim = novo;
     }else{
-        t_elemento_lse* cam = lse->inicio;
-        while(cam->prox!=NULL){
-            cam=cam->prox;
-        }
-        cam->prox = novo;
+        // t_elemento_lse* cam = lse->inicio;
+        // while(cam->prox!=NULL){
+        //     cam=cam->prox;
+        // }
+        // cam->prox = novo;
+        lse->fim->prox = novo;
+        lse->fim = novo;
     }
     lse->tamanho++;
 }
@@ -117,12 +122,14 @@ void* remover_final_lse(t_lse* lse){
     }else if(lse->tamanho == 1){
         cam = lse->inicio;
         lse->inicio=NULL;
+        lse->fim = NULL;
     }else{
         while(cam->prox!=NULL){
             ant = cam;
             cam = cam->prox;
         }
         ant->prox = NULL;
+        lse->fim = ant;
     }
     carga = cam->cargautil;
     free(cam);
@@ -158,6 +165,8 @@ void inserir_lse(t_lse* lse, void* nova_carga){
         }else{
             ant->prox = novo;
             novo->prox = cam;
+            if (cam == NULL)
+                lse->fim = novo;
         }
     }
 }
@@ -188,8 +197,12 @@ void* remover_lse(t_lse* lse, void* chave){
         carga = cam->cargautil;
         if (cam == lse->inicio){ // inicio?
             lse->inicio = cam->prox;
+            if (cam->prox == NULL)
+                lse->fim=NULL;
         }else{
-        ant->prox = cam->prox;
+            ant->prox = cam->prox;
+            if (cam->prox == NULL)
+                lse->fim = ant;
         }
         free(cam);
         lse->tamanho--;
