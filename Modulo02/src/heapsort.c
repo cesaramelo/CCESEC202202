@@ -1,6 +1,6 @@
 #include "stdlib.h"
 #include "stdio.h"
-#include "heapsort.h"
+#include "ordenacao.h"
 
 typedef struct heap t_heap;
 
@@ -85,7 +85,7 @@ void destroy_heap(t_heap* h){
     free(h);
 }
 
-void heapsort(void* vetor[], int tam, TCompararHeapsort comparar){
+void heap_sort(void* vetor[], int tam, TCompararHeapsort comparar){
 
     t_heap* h = criar_heap(tam, comparar);
     

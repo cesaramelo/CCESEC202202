@@ -1,11 +1,11 @@
 #include "stdio.h"
 #include "math.h"
+#include "ordenacao.h"
 
-
-void contagem(int vetor_A[], int tam, int tam_c){
+void contagem(void* vetor_A[], int tam, int tam_c, TLerIdContagem ler_id){
     //int tam_c = maior(vetor_A, tam);
 
-    int vetor_B[tam];
+    void* vetor_B[tam];
     int vetor_C[tam_c];
 
     for(int i=0;i<tam_c;i++){
@@ -13,7 +13,8 @@ void contagem(int vetor_A[], int tam, int tam_c){
     }
 
     for(int i=0;i<tam;i++){
-        vetor_C[vetor_A[i]] = vetor_C[vetor_A[i]] + 1;
+        int k = ler_id(vetor_A[i]);
+        vetor_C[k] = vetor_C[k] + 1;
     }
 
     for(int i=1;i<tam_c;i++){
@@ -21,9 +22,10 @@ void contagem(int vetor_A[], int tam, int tam_c){
     }
     
     for(int i=tam-1;i>=0;i--){
-        int j = vetor_C[vetor_A[i]];
+        int k = ler_id(vetor_A[i]);
+        int j = vetor_C[k];
         vetor_B[j-1] = vetor_A[i];
-        vetor_C[vetor_A[i]] = vetor_C[vetor_A[i]] - 1;
+        vetor_C[k] = vetor_C[k] - 1;
     }
 
     for(int i=0;i<tam;i++){
@@ -31,18 +33,5 @@ void contagem(int vetor_A[], int tam, int tam_c){
     }
 }
 
-
-int main(int argc, char const *argv[])
-{
-    int vetor[] = {3,3,7,2,7,4,7,6,4,8,8,3,0,2,1,0,2};
-
-    contagem(vetor, 17, 9);
-    for(int i=0;i<17;i++){
-        printf("%d ", vetor[i]);
-    }
-    printf("\n");
-
-    return 0;
-}
 
 
