@@ -1,5 +1,5 @@
 #include "stdio.h"
-#include "quick_sort.h"
+#include "ordenacao.h"
 
 static void trocar(void* elem[], int i, int j){
     void* aux = elem[i];
@@ -20,7 +20,7 @@ static int particionamento(void* vetor[], int lim_i, int lim_f, TCompararQS comp
         while(comparar(vetor[i],pivo) < 0){
             i++;
         }
-        while( (j>=lim_i) && (comparar(vetor[j],pivo)>0) ){ // detalhe
+        while( (j>=lim_i) && (comparar(vetor[j],pivo)>=0) ){ // detalhe
             j--;
         }
 

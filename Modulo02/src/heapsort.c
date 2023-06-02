@@ -25,14 +25,14 @@ static void trocar(void* elem[], int i, int j){
 static void desce_no_heap(t_heap* h, int k){
 
     int imaior = k;
-    int childrenLeft = (k*2) + 1;
-    int childrenRight = (k*2) + 2;
+    int i_esq = (k*2) + 1;
+    int i_dir = (k*2) + 2;
     
-    if ((childrenLeft < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[childrenLeft])<0)){
-        imaior = childrenLeft;
+    if ((i_esq < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[i_esq])<0)){
+        imaior = i_esq;
     }
-    if ((childrenRight < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[ childrenRight ])<0)){
-        imaior = childrenRight;
+    if ((i_dir < h->ocupacao) && (h->comparar(h->elem[imaior],h->elem[ i_dir ])<0)){
+        imaior = i_dir;
     }
     if (imaior!=k){
         trocar(h->elem, k, imaior);
