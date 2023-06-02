@@ -64,7 +64,7 @@ imprimirAB(TNo* raiz){
     imprimirAB(raiz->sad);
 }
 
-====== USA AB
+//====== USA AB
 
 typedef struct carro{
     char placa[8];
@@ -96,7 +96,7 @@ int main(int argc, char const *argv[])
     srand(time(NULL));
 
     // leitura para inserir os dados AB;
-    
+
     //imprimirAB(raiz);
     //alturaAB(raiz);
     //tamanhoAB(raiz->sad);
