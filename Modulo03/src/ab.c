@@ -41,12 +41,12 @@ t_ab* criarAB(TImprimirAB imprimir, TCompararAB comparar){
 }
 
 
-void conectaRaizSAE(TNo *raiz, TNo* sae){
+static void conectaRaizSAE(TNo *raiz, TNo* sae){
     raiz->sae = sae;
     sae->ancestral = raiz;
 }
 
-void conectaRaizSAD(TNo *raiz, TNo* sad){
+static void conectaRaizSAD(TNo *raiz, TNo* sad){
     raiz->sad = sad;
     sad->ancestral = raiz;
 }
@@ -111,21 +111,54 @@ void imprimirAB(t_ab* ab){
     __imprimirAB(ab->raiz, ab->imprimir);
 }
 
-void* __buscarAB(TNo* raiz, void* buscado, TCompararAB comparar){
+TNo* __buscarAB(TNo* raiz, void* buscado, TCompararAB comparar){
+    // base da recursão
     if (raiz == NULL){
         return NULL;
     }else if( comparar(raiz->info, buscado) == 0){
-        return raiz->info;
+        return raiz;
     }
-    void* info = __buscarAB(raiz->sae, buscado, comparar);
-    if (info == NULL){
-        info = __buscarAB(raiz->sad, buscado, comparar);
+
+    // caminhar na AB
+    TNo* no = __buscarAB(raiz->sae, buscado, comparar);
+    if (no == NULL){
+        no = __buscarAB(raiz->sad, buscado, comparar);
     }
-    return info;
+    return no;
 }
 
 void* buscarAB(t_ab *ab, void* buscado){
-    return __buscarAB(ab->raiz, buscado, ab->comparar);
+    TNo* no = __buscarAB(ab->raiz, buscado, ab->comparar);
+    return (no != NULL?no->info:NULL);
+
+}
+
+
+static void __podarAB(TNo* raiz){
+    if (raiz == NULL){
+        return;
+    }
+    __podarAB(raiz->sae);
+    __podarAB(raiz->sad);
+    free(raiz->info); // precisa ajuste
+    free(raiz);
+}
+
+void podarAB(t_ab* ab, void* info){
+    TNo* no = __buscarAB(ab->raiz, info, ab->comparar);
+    if (no != NULL){ // encontrou a info
+        if (no == ab->raiz) { // poda drástica
+            ab->raiz = NULL;
+        } else {
+            TNo* ancestral = no->ancestral;
+            if (ancestral->sae == no){
+                ancestral->sae = NULL;
+            } else {
+                ancestral->sad = NULL;
+            }
+        }
+        __podarAB(no);
+     }
 }
 
 //====== USA AB
@@ -194,6 +227,19 @@ int main(int argc, char const *argv[])
     t_carro* buscado = buscarAB(carros, placa);
     
     imprimir_carro(buscado);
+
+    do{
+        printf("informe placa para podar:");
+        scanf("%s", placa);
+
+        podarAB(carros, placa);
+        buscado = buscarAB(carros, placa);
+        if (buscado == NULL){
+            printf("Ramo podado\n");
+        }else{
+            printf("Tem erro na poda\n");
+        }
+    }while(strcmp(placa,"FIM")!=0);
 
     return 0;
 }
