@@ -22,17 +22,20 @@ TNo* criar_no(TNo* ascentral, void* info){
 }
 
 typedef void(*TImprimirAB)(void* info);
+typedef int(*TCompararAB)(void* s1, void* s2);
 typedef struct ab{
     TNo* raiz;
     TImprimirAB imprimir;
+    TCompararAB comparar;
     // removerInfoNo
 } t_ab;
 
-t_ab* criarAB(TImprimirAB imprimir){
+t_ab* criarAB(TImprimirAB imprimir, TCompararAB comparar){
     t_ab* ab = malloc(sizeof(t_ab));
 
     ab->raiz = NULL;
     ab->imprimir = imprimir;
+    ab->comparar = comparar;
 
     return ab;
 }
@@ -48,7 +51,7 @@ void conectaRaizSAD(TNo *raiz, TNo* sad){
     sad->ancestral = raiz;
 }
 
-static TNo* _inserirAB(TNo* raiz, void* info){
+static TNo* __inserirAB(TNo* raiz, void* info){
     //printf("Iniciou inserção \n");
     if (raiz == NULL){
         //printf("Inseriu no \n");
@@ -56,10 +59,10 @@ static TNo* _inserirAB(TNo* raiz, void* info){
         return novo;
     }
     if ((rand()%2) == 1){ // relação aleatória
-        TNo* sae = _inserirAB(raiz->sae, info);
+        TNo* sae = __inserirAB(raiz->sae, info);
         conectaRaizSAE(raiz, sae);
     }else{
-        TNo* sad = _inserirAB(raiz->sad, info);
+        TNo* sad = __inserirAB(raiz->sad, info);
         conectaRaizSAD(raiz, sad);
     }
 
@@ -68,45 +71,63 @@ static TNo* _inserirAB(TNo* raiz, void* info){
 
 void inserirAB(t_ab *ab, void* info){
 
-    ab->raiz = _inserirAB(ab->raiz, info);
+    ab->raiz = __inserirAB(ab->raiz, info);
     //printf("Terminou insercao\n");
 
 }
 
 #define MAX(a,b) (a>b?a:b)
 
-static int _alturaAB(TNo *raiz){
+static int __alturaAB(TNo *raiz){
     if (raiz == NULL)
         return -1;
-    return MAX(_alturaAB(raiz->sae), _alturaAB(raiz->sad))+1;
+    return MAX(__alturaAB(raiz->sae), __alturaAB(raiz->sad))+1;
 }
 
 int alturaAB(t_ab *ab){
-    return _alturaAB(ab->raiz);
+    return __alturaAB(ab->raiz);
 }
 
-static int _tamanhoAB(TNo* raiz){
+static int __tamanhoAB(TNo* raiz){
     if (raiz == NULL)
         return 0;
-    return (_tamanhoAB(raiz->sae)+_tamanhoAB(raiz->sad))+1;
+    return (__tamanhoAB(raiz->sae)+__tamanhoAB(raiz->sad))+1;
 }
 
 int tamanhoAB(t_ab *ab){
-    return _tamanhoAB(ab->raiz);
+    return __tamanhoAB(ab->raiz);
 
 }
 
-static void _imprimirAB(TNo* raiz, TImprimirAB imprimir){
+static void __imprimirAB(TNo* raiz, TImprimirAB imprimir){
     if (raiz == NULL)
         return;
-    _imprimirAB(raiz->sae, imprimir);
+    __imprimirAB(raiz->sae, imprimir);
     imprimir(raiz->info);
-    _imprimirAB(raiz->sad, imprimir);
+    __imprimirAB(raiz->sad, imprimir);
 }
 
 void imprimirAB(t_ab* ab){
-    _imprimirAB(ab->raiz, ab->imprimir);
+    __imprimirAB(ab->raiz, ab->imprimir);
 }
+
+void* __buscarAB(TNo* raiz, void* buscado, TCompararAB comparar){
+    if (raiz == NULL){
+        return NULL;
+    }else if( comparar(raiz->info, buscado) == 0){
+        return raiz->info;
+    }
+    void* info = __buscarAB(raiz->sae, buscado, comparar);
+    if (info == NULL){
+        info = __buscarAB(raiz->sad, buscado, comparar);
+    }
+    return info;
+}
+
+void* buscarAB(t_ab *ab, void* buscado){
+    return __buscarAB(ab->raiz, buscado, ab->comparar);
+}
+
 //====== USA AB
 
 typedef struct carro{
@@ -114,6 +135,7 @@ typedef struct carro{
     int anoFabricacao;
     int hora, min;
 }t_carro;
+
 
 t_carro* criar_carro(char placa[], int hora, int min, int anoFab){
     t_carro *c = malloc(sizeof(t_carro));
@@ -136,6 +158,10 @@ void imprimir_carro(t_carro* c){
 
 }
 
+int comparar_carro(t_carro* c1, t_carro* c2){
+    return strcmp(c1->placa,c2->placa);
+}
+
 int main(int argc, char const *argv[])
 {
     char placa[9];
@@ -143,7 +169,7 @@ int main(int argc, char const *argv[])
 
     srand(time(NULL));
 
-    t_ab *carros = criarAB(imprimir_carro);
+    t_ab *carros = criarAB(imprimir_carro, comparar_carro);
 
     // leitura para inserir os dados AB;
     scanf("%s", placa);    
@@ -161,6 +187,13 @@ int main(int argc, char const *argv[])
     imprimirAB(carros);
     printf("Altura: %d\n", alturaAB(carros));
     printf("Tamanho: %d\n", tamanhoAB(carros)); 
+
+    printf("INforme a placa: ");
+    scanf("%s",placa);
+    
+    t_carro* buscado = buscarAB(carros, placa);
+    
+    imprimir_carro(buscado);
 
     return 0;
 }
