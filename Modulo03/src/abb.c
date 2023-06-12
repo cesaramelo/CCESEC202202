@@ -98,6 +98,128 @@ void* buscarABB(t_ab *abb, void* buscado){
 
 }
 
+static void trocar(TNo* no, TNo* no2){
+    void* aux = no->info;
+    no->info = no2->info;
+    no2->info = aux;
+}
+
+TNo* __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
+
+    TNo* no = __buscarABB(raiz, removivel, comparar);
+    if (no == NULL){
+        return raiz;
+    }else if((no->sae == NULL) && (no->sad == NULL)){
+        if(no->ancestral == NULL){
+            free(no->info);
+            free(no);
+            return NULL;
+        }else{
+            if (no->ancestral->sae == no){
+                no->ancestral->sae = NULL;
+            }else{
+                no->ancestral->sad = NULL;
+            }
+            free(no->info);
+            free(no);
+            return raiz;
+        }
+    }else if ((no->sae == NULL) && (no->sad != NULL)){
+        if (no->ancestral == NULL){
+            no->sad->ancestral = NULL;
+            raiz = no->sad;
+            free(no->info);
+            free(no);
+            return raiz;
+        }else{
+            if (no->ancestral->sae == no){
+                no->ancestral->sae = no->sad;
+            }else{
+                no->ancestral->sad = no->sad;
+            }
+            free(no->info);
+            free(no);
+            return raiz;
+        }
+    }else if ((no->sae != NULL) && (no->sad == NULL)){
+        if (no->ancestral == NULL){
+            no->sae->ancestral = NULL;
+            raiz = no->sae;
+            free(no->info);
+            free(no);
+            return raiz;
+        }else{
+            if (no->ancestral->sae == no){
+                no->ancestral->sae = no->sae;
+            }else{
+                no->ancestral->sad = no->sae;
+            }
+            free(no->info);
+            free(no);
+            return raiz;
+        }
+    
+    }else{ // Raiz com dois descendentes
+        // encontando nó maior na SAE
+        TNo* maior = no->sae;
+        while(maior->sad!=NULL){
+            maior = maior->sad;
+        }
+
+        trocar(no,maior);
+        __removerABB(no->sae,removivel,comparar);
+        return raiz;
+    }
+}
+
+// TNo * __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
+//     if (raiz == NULL){
+//         return NULL;
+//     }else if (comparar(raiz->info, removivel)>0){ // caminha para a SAE
+//         raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+//         return raiz;
+//     }else if (comparar(raiz->info, removivel)<0){ // caminha para a SAD
+//         raiz->sad = __removerABB(raiz->sad, removivel, comparar);
+//         return raiz;
+//     }else{ // achou
+//         if ( (raiz->sae == NULL) &&  (raiz->sad == NULL)){
+//             free(raiz->info);
+//             free(raiz);
+//             return NULL;
+
+//         }else if (raiz->sae == NULL){
+//             raiz->sad->ancestral = raiz->ancestral;
+//             TNo* sad = raiz->sad;
+//             free(raiz->info);
+//             free(raiz);
+//             return sad;
+
+//         }else if (raiz->sad == NULL){
+//             raiz->sae->ancestral = raiz->ancestral;
+//             TNo* sae = raiz->sae;
+//             free(raiz->info);
+//             free(raiz);
+//             return sae;
+
+//         }else{ // Dois descendentes
+//             TNo* maior = raiz->sae;
+//             while(maior->sad!=NULL){
+//                 maior = maior->sad;
+//             }
+//             trocar(raiz, maior);
+//             raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+//             return raiz;
+
+//         }
+
+//     }
+
+// }
+
+void removerABB(t_ab *abb, void* removivel){
+   abb->raiz = __removerABB(abb->raiz, removivel, abb->comparar);    
+}
+
 static void __podarABB(TNo* raiz){
     if (raiz == NULL){
         return;
@@ -188,8 +310,8 @@ void destroy_carro(t_carro *c){
 }
 
 void imprimir_carro(t_carro* c){
-
-    printf("Placa: %s %d:%d %d\n", c->placa, c->hora, c->min, c->anoFabricacao);
+    if (c)
+        printf("Placa: %s %d:%d %d\n", c->placa, c->hora, c->min, c->anoFabricacao);
 
 }
 
@@ -243,5 +365,23 @@ int main(int argc, char const *argv[])
         }
     }while(strcmp(placa,"FIM")!=0);
 
+    do{
+        printf("informe placa para remoção:");
+        scanf("%s", placa);
+
+        buscado = buscarABB(carros, placa);
+        if (buscado != NULL){
+            removerABB(carros, placa);
+            buscado = buscarABB(carros, placa);
+            if (buscado == NULL){
+                printf("No removido\n");
+            }else{
+                printf("Tem erro na remoção\n");
+            }
+        }else{
+            printf("Conteudo não existe\n"); 
+        }
+    }while(strcmp(placa,"FIM")!=0);
+    
     return 0;
 }
