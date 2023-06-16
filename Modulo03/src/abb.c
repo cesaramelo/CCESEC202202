@@ -28,28 +28,19 @@ typedef struct abb{
     TImprimirABB imprimir;
     TCompararABB comparar;
     // removerInfoNo
-} t_ab;
+    //t_stat stats;
+} t_abb;
 
-t_ab* criarABB(TImprimirABB imprimir, TCompararABB comparar){
-    t_ab* abb = malloc(sizeof(t_ab));
+t_abb* criarABB(TImprimirABB imprimir, TCompararABB comparar){
+    t_abb* abb = malloc(sizeof(t_abb));
 
     abb->raiz = NULL;
     abb->imprimir = imprimir;
     abb->comparar = comparar;
-
+    
     return abb;
 }
 
-
-static void conectaRaizSAE(TNo *raiz, TNo* sae){
-    raiz->sae = sae;
-    sae->ancestral = raiz;
-}
-
-static void conectaRaizSAD(TNo *raiz, TNo* sad){
-    raiz->sad = sad;
-    sad->ancestral = raiz;
-}
 
 static TNo* __inserirABB(TNo* raiz, void* info, TCompararABB comparar){
     //printf("Iniciou inserção \n");
@@ -59,17 +50,21 @@ static TNo* __inserirABB(TNo* raiz, void* info, TCompararABB comparar){
         return novo;
     }
     if (comparar(raiz->info, info) > 0){ // uso da propriedade ordem
-        TNo* sae = __inserirABB(raiz->sae, info, comparar);
-        conectaRaizSAE(raiz, sae);
+        raiz->sae = __inserirABB(raiz->sae, info, comparar);
+        raiz->sae->ancestral = raiz;
     }else{
-        TNo* sad = __inserirABB(raiz->sad, info, comparar);
-        conectaRaizSAD(raiz, sad);
+        raiz->sad = __inserirABB(raiz->sad, info, comparar);
+        raiz->sad->ancestral = raiz;
     }
 
     return raiz;
 }
 
-void inserirABB(t_ab *abb, void* info){
+void estatisticaABB(t_abb *abb){
+
+}
+
+void inserirABB(t_abb *abb, void* info){
 
     abb->raiz = __inserirABB(abb->raiz, info, abb->comparar);
     //printf("Terminou insercao\n");
@@ -92,7 +87,7 @@ TNo* __buscarABB(TNo* raiz, void* buscado, TCompararABB comparar){
 
 }
 
-void* buscarABB(t_ab *abb, void* buscado){
+void* buscarABB(t_abb *abb, void* buscado){
     TNo* no = __buscarABB(abb->raiz, buscado, abb->comparar);
     return (no != NULL?no->info:NULL);
 
@@ -104,119 +99,119 @@ static void trocar(TNo* no, TNo* no2){
     no2->info = aux;
 }
 
-TNo* __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
+// TNo* __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
 
-    TNo* no = __buscarABB(raiz, removivel, comparar);
-    if (no == NULL){
-        return raiz;
-    }else if((no->sae == NULL) && (no->sad == NULL)){
-        if(no->ancestral == NULL){
-            free(no->info);
-            free(no);
-            return NULL;
-        }else{
-            if (no->ancestral->sae == no){
-                no->ancestral->sae = NULL;
-            }else{
-                no->ancestral->sad = NULL;
-            }
-            free(no->info);
-            free(no);
-            return raiz;
-        }
-    }else if ((no->sae == NULL) && (no->sad != NULL)){
-        if (no->ancestral == NULL){
-            no->sad->ancestral = NULL;
-            raiz = no->sad;
-            free(no->info);
-            free(no);
-            return raiz;
-        }else{
-            if (no->ancestral->sae == no){
-                no->ancestral->sae = no->sad;
-            }else{
-                no->ancestral->sad = no->sad;
-            }
-            free(no->info);
-            free(no);
-            return raiz;
-        }
-    }else if ((no->sae != NULL) && (no->sad == NULL)){
-        if (no->ancestral == NULL){
-            no->sae->ancestral = NULL;
-            raiz = no->sae;
-            free(no->info);
-            free(no);
-            return raiz;
-        }else{
-            if (no->ancestral->sae == no){
-                no->ancestral->sae = no->sae;
-            }else{
-                no->ancestral->sad = no->sae;
-            }
-            free(no->info);
-            free(no);
-            return raiz;
-        }
-    
-    }else{ // Raiz com dois descendentes
-        // encontando nó maior na SAE
-        TNo* maior = no->sae;
-        while(maior->sad!=NULL){
-            maior = maior->sad;
-        }
-
-        trocar(no,maior);
-        __removerABB(no->sae,removivel,comparar);
-        return raiz;
-    }
-}
-
-// TNo * __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
-//     if (raiz == NULL){
-//         return NULL;
-//     }else if (comparar(raiz->info, removivel)>0){ // caminha para a SAE
-//         raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+//     TNo* no = __buscarABB(raiz, removivel, comparar);
+//     if (no == NULL){
 //         return raiz;
-//     }else if (comparar(raiz->info, removivel)<0){ // caminha para a SAD
-//         raiz->sad = __removerABB(raiz->sad, removivel, comparar);
-//         return raiz;
-//     }else{ // achou
-//         if ( (raiz->sae == NULL) &&  (raiz->sad == NULL)){
-//             free(raiz->info);
-//             free(raiz);
+//     }else if((no->sae == NULL) && (no->sad == NULL)){
+//         if(no->ancestral == NULL){
+//             free(no->info);
+//             free(no);
 //             return NULL;
-
-//         }else if (raiz->sae == NULL){
-//             raiz->sad->ancestral = raiz->ancestral;
-//             TNo* sad = raiz->sad;
-//             free(raiz->info);
-//             free(raiz);
-//             return sad;
-
-//         }else if (raiz->sad == NULL){
-//             raiz->sae->ancestral = raiz->ancestral;
-//             TNo* sae = raiz->sae;
-//             free(raiz->info);
-//             free(raiz);
-//             return sae;
-
-//         }else{ // Dois descendentes
-//             TNo* maior = raiz->sae;
-//             while(maior->sad!=NULL){
-//                 maior = maior->sad;
+//         }else{
+//             if (no->ancestral->sae == no){
+//                 no->ancestral->sae = NULL;
+//             }else{
+//                 no->ancestral->sad = NULL;
 //             }
-//             trocar(raiz, maior);
-//             raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+//             free(no->info);
+//             free(no);
 //             return raiz;
-
+//         }
+//     }else if ((no->sae == NULL) && (no->sad != NULL)){
+//         if (no->ancestral == NULL){
+//             no->sad->ancestral = NULL;
+//             raiz = no->sad;
+//             free(no->info);
+//             free(no);
+//             return raiz;
+//         }else{
+//             if (no->ancestral->sae == no){
+//                 no->ancestral->sae = no->sad;
+//             }else{
+//                 no->ancestral->sad = no->sad;
+//             }
+//             free(no->info);
+//             free(no);
+//             return raiz;
+//         }
+//     }else if ((no->sae != NULL) && (no->sad == NULL)){
+//         if (no->ancestral == NULL){
+//             no->sae->ancestral = NULL;
+//             raiz = no->sae;
+//             free(no->info);
+//             free(no);
+//             return raiz;
+//         }else{
+//             if (no->ancestral->sae == no){
+//                 no->ancestral->sae = no->sae;
+//             }else{
+//                 no->ancestral->sad = no->sae;
+//             }
+//             free(no->info);
+//             free(no);
+//             return raiz;
+//         }
+    
+//     }else{ // Raiz com dois descendentes
+//         // encontando nó maior na SAE
+//         TNo* maior = no->sae;
+//         while(maior->sad!=NULL){
+//             maior = maior->sad;
 //         }
 
+//         trocar(no,maior);
+//         __removerABB(no->sae,removivel,comparar);
+//         return raiz;
 //     }
-
 // }
 
-void removerABB(t_ab *abb, void* removivel){
+TNo * __removerABB(TNo* raiz, void* removivel, TCompararABB comparar){
+    if (raiz == NULL){
+        return NULL;
+    }else if (comparar(raiz->info, removivel)>0){ // caminha para a SAE
+        raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+        return raiz;
+    }else if (comparar(raiz->info, removivel)<0){ // caminha para a SAD
+        raiz->sad = __removerABB(raiz->sad, removivel, comparar);
+        return raiz;
+    }else{ // achou
+        if ( (raiz->sae == NULL) &&  (raiz->sad == NULL)){
+            free(raiz->info);
+            free(raiz);
+            return NULL;
+
+        }else if (raiz->sae == NULL){
+            raiz->sad->ancestral = raiz->ancestral;
+            TNo* sad = raiz->sad;
+            free(raiz->info);
+            free(raiz);
+            return sad;
+
+        }else if (raiz->sad == NULL){
+            raiz->sae->ancestral = raiz->ancestral;
+            TNo* sae = raiz->sae;
+            free(raiz->info);
+            free(raiz);
+            return sae;
+
+        }else{ // Dois descendentes
+            TNo* maior = raiz->sae;
+            while(maior->sad!=NULL){
+                maior = maior->sad;
+            }
+            trocar(raiz, maior);
+            raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+            return raiz;
+
+        }
+
+    }
+
+}
+
+void removerABB(t_abb *abb, void* removivel){
    abb->raiz = __removerABB(abb->raiz, removivel, abb->comparar);    
 }
 
@@ -230,7 +225,7 @@ static void __podarABB(TNo* raiz){
     free(raiz);
 }
 
-void podarABB(t_ab* abb, void* info){
+void podarABB(t_abb* abb, void* info){
     TNo* no = __buscarABB(abb->raiz, info, abb->comparar);
     if (no != NULL){ // encontrou a info
         if (no == abb->raiz) { // poda drástica
@@ -257,7 +252,7 @@ static int __alturaABB(TNo *raiz){
     return MAX(__alturaABB(raiz->sae), __alturaABB(raiz->sad))+1;
 }
 
-int alturaABB(t_ab *abb){
+int alturaABB(t_abb *abb){
     return __alturaABB(abb->raiz);
 }
 
@@ -267,7 +262,7 @@ static int __tamanhoABB(TNo* raiz){
     return (__tamanhoABB(raiz->sae)+__tamanhoABB(raiz->sad))+1;
 }
 
-int tamanhoABB(t_ab *abb){
+int tamanhoABB(t_abb *abb){
     return __tamanhoABB(abb->raiz);
 
 }
@@ -280,7 +275,7 @@ static void __imprimirABB(TNo* raiz, TImprimirABB imprimir){
     __imprimirABB(raiz->sad, imprimir);
 }
 
-void imprimirABB(t_ab* abb){
+void imprimirABB(t_abb* abb){
     __imprimirABB(abb->raiz, abb->imprimir);
 }
 
@@ -326,7 +321,7 @@ int main(int argc, char const *argv[])
 
     srand(time(NULL));
 
-    t_ab *carros = criarABB(imprimir_carro, comparar_carro);
+    t_abb *carros = criarABB(imprimir_carro, comparar_carro);
 
     // leitura para inserir os dados abb;
     scanf("%s", placa);    

@@ -50,12 +50,15 @@ Você e sua equipe precisarão submeter a implementação da sua solução, segu
     2.3) Resultados - As estatísticas coletadas e comentários
     2.4) Conclusão - Observações gerais sobre a realização do trabalho.
 
-Na nomeação do arquivo, o (*) asterísco deve ser substituído pelas (03) três primeiras letras do nome do algoritmo implementado, naquele arquivo.
+Na nomeação do arquivo, o (*) asterísco deve ser substituído pelas (03) três primeiras letras do nome do algoritmo implementado, naquele arquivo. Os arquivos arv_avl.c e arv_avl.h são os nomes que você precisa usar para implementar a árvore AVL. Nos arquivos arv_red.c arv_red.h são os nomes que você precisa usar para implementar a árvore RED.
+
+![width:600px center](./estrutura.drawio.svg)
+
 
 Os algoritmos que podem ser implementados:
 
 - AVL (avl) [visualização](https://www.cs.usfca.edu/~galles/visualization/AVLtree.html)  [apresentação](https://www.geeksforgeeks.org/what-is-avl-tree-avl-tree-meaning/)
-- Red-Black (red) [visualização]([https://www.cs.usfca.edu/~galles/visualization/RedBlack.html) [apresentação](https://www.geeksforgeeks.org/introduction-to-red-black-tree/)
+- Red-Black (red) [visualização](https://www.cs.usfca.edu/~galles/visualization/RedBlack.html) [apresentação](https://www.geeksforgeeks.org/introduction-to-red-black-tree/)
 
 
 # Critérios para avaliação
