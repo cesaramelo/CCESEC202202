@@ -74,12 +74,17 @@ static TNo* __inserirABB(TNo* raiz, void* info, TCompararABB comparar, t_stats* 
 void estatisticaABB(t_abb *abb){
     t_stats* stats = &(abb->stats);
     printf("Estatísticas:\n");
+    double i_media = (double)(stats->i_cmps)/(stats->i_nro);
     printf("Inserções: %d\n", stats->i_nro);
-    printf("cmps nas inserções: %d\n", stats->i_cmps);
+    printf("cmps nas inserções: %d media: %.2lf\n", stats->i_cmps, i_media);
+
+    double b_media = (double)(stats->b_cmps)/(stats->b_nro);
     printf("Buscas: %d\n", stats->b_nro);
-    printf("cmps nas buscas: %d\n", stats->b_cmps);
+    printf("cmps nas buscas: %d media: %.2lf\n", stats->b_cmps, b_media);
+    
+    double r_media = (double)(stats->r_cmps)/(stats->r_nro);
     printf("Remoções: %d\n", stats->r_nro);
-    printf("cmps nas remoções: %d\n", stats->r_cmps);
+    printf("cmps nas remoções: %d media: %.2lf\n", stats->r_cmps, r_media);
 
 }
 
@@ -131,11 +136,11 @@ TNo * __removerABB(TNo* raiz, void* removivel, TCompararABB comparar, t_stats* s
         return NULL;
     }else if (comparar(raiz->info, removivel)>0){ // caminha para a SAE
         stats->r_cmps++;
-        raiz->sae = __removerABB(raiz->sae, removivel, comparar);
+        raiz->sae = __removerABB(raiz->sae, removivel, comparar, stats);
         return raiz;
     }else if (comparar(raiz->info, removivel)<0){ // caminha para a SAD
         stats->r_cmps+=2;
-        raiz->sad = __removerABB(raiz->sad, removivel, comparar);
+        raiz->sad = __removerABB(raiz->sad, removivel, comparar, stats);
         return raiz;
     }else{ // achou
         stats->r_cmps+=3;
@@ -191,7 +196,8 @@ static void __podarABB(TNo* raiz){
 }
 
 void podarABB(t_abb* abb, void* info){
-    TNo* no = __buscarABB(abb->raiz, info, abb->comparar);
+    t_stats* stats = &(abb->stats);
+    TNo* no = __buscarABB(abb->raiz, info, abb->comparar, stats);
     if (no != NULL){ // encontrou a info
         if (no == abb->raiz) { // poda drástica
             abb->raiz = NULL;
