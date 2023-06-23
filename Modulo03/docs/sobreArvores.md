@@ -44,6 +44,9 @@ Para a realização de testes será disponibilizadas uma base contendo as seguin
 Você e sua equipe precisarão submeter a implementação da sua solução, seguindo as orientações dadas a seguir:
 
 1) O nome do arquivo de cada implementação arv_<*>.c arv_<*>.h
+2) Os tipos árvores precisam ser nomeados t_<*>, onde * deve ser:
+    i) **red** para árvore vermelho e preto;
+    ii) **avl** para árvore AVL. 
 2) O relatório apresentado:
     2.1) Introdução - Apresentação do problema 
     2.2) Métodos - Algoritmos implementados
@@ -79,3 +82,5 @@ Será ainda considerado:
 O trabalho deve ser implementado em equipe. As equipes podem ter ATÉ 4(quatro) membros.
 
 No final do relatório, deve-se listar a contribuição de cada membro na elaboração do trabalho. Por exemplo, *Maria Júlia concebeu as estruturas de argumentação (ampliação) de funcionalidade de estatísticas*; *Pedro Paulo implementou a operação de inserção e remoção em uma AVL*. 
+
+Data de entrega: 28-06-2023.
