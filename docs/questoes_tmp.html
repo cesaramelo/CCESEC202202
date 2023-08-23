@@ -370,10 +370,6 @@ code {
 <li>Seja $a$ uma árvore binária (AB). Sabemos por definição que uma AB estabelece uma relação hierárquica entre os nós que a formam, limitando essa relação a no máximo dois nós. Portanto, um nó $r$ qualquer tem no máximo dois descendentes, chamados raiz das sub-árvores.  Responda as seguintes questões sobre $a$.</li>
 </ol>
 <p>1.1) Qual o número mínimo e máximo de nós que pode existir em $a$ cuja altura é igual a 4?</p>
-<p>a) 16 e 4<br>
-b) 15 e 3<br>
-c) 15 e 4<br>
-d) 16 e 5</p>
 <p>1.2) Qualquer remoção de nó folha em $a$ produz uma diminuição em sua altura. Você concorda com essa afirmação? Sim ou não, justifique a sua resposta.</p>
 <p>1.3) A quantidade de elementos em um nível $d$ da AB $a$ é igual a:</p>
 <p>i) $2^d$<br>
@@ -384,6 +380,92 @@ v) $2^{(d - 1)}$</p>
 <p>1.4) A altura $h$ de uma AB completa é dada pela seguinte expressão:</p>
 <p>$h = \lceil log(n+1) \rceil - 1 $</p>
 <p>Apresente uma prova por indução para essa expressão.</p>
+<ol start="2">
+<li>Considere as propriedades de uma árvore AVL. Qual é a altura máxima de uma AVL com 7 nós?</li>
+</ol>
+<p>a) 4<br>
+b) 5<br>
+c) 7<br>
+d) 3 x</p>
+<ol start="3">
+<li>Considere as propriedades de uma árvore AVL. Nomeie as rotações realizadas na árvore a partir de uma sequência de inserções realizadas, conforme figura abaixo.</li>
+</ol>
+<p>a) Rotação simples à esquerda, rotação dupla à esquerda<br>
+b) Rotação simples à direita, rotação dupla à direita<br>
+c) Rotação simples à esquerda, rotação dupla à direita<br>
+d) Rotação simples à direita, rotação dupla à esquerda x<br>
+e) Rotação dupla à esquerda, Rotação simples à esquerda</p>
+<ol start="3">
+<li>Ao implementar uma fila com prioridade, um programador avaliou o uso do Heap e de uma AVL como estrutura para armazenar os itens. Ele considerou as operações de consulta, inserção e remoção em um heap de máxima e em uma árvore AVL, e fez as seguintes afirmações:</li>
+</ol>
+<p>i) operação de consulta, que determina o maior valor nas mencionadas estruturas, tem o mesmo custo computacional O(log(n))<br>
+ii) Operação de inserção no heap de máxima tem custo computacinal O(log(n)), que é o mesmo tempo de uma inserção em uma AVL.<br>
+iii) Operação de remoção, que envolve a raiz do heap, tem custo computacional O(log(n)) e é igual ao custo computacinal da operação de remoção de qualquer nó em uma AVL.</p>
+<p>Marque as alternativas corretas:</p>
+<p>a) apenas as afirmações ii) e iii) estão corretas<br>
+b) apenas a afirmação i) está correta<br>
+c) apenas as afirmações i) e iii) estão corretas<br>
+d) as afirmações i), ii) e iii) estão corretas<br>
+e) apenas a afirmação iii) está correta</p>
+<ol start="4">
+<li>Considere um conjunto de 07 valores diferentes que será usado para construir duas árvores: Árvore Binária (AB) Completa, e Árvore Binária de Busca (ABB) AVL. Sobre as árvores construídas é possível afirmar:</li>
+</ol>
+<p>i) A altura AB Completa é igual a dois e último nível da árvore tem o número máximo de elementos;<br>
+ii) A altura máxima da ABB AVL construída é igual a três.<br>
+iii) As duas árvores construídas apesar de alturas ligeiramente diferentes apresentam o mesmo custo computacional para a operação de busca O(log(n))</p>
+<p>É correto afirmar que:</p>
+<p>a) Somente as afirmações i) e ii) estão corretas<br>
+b) Somente a afirmação iii) está correta<br>
+c) Somente a afirmação i) está correta<br>
+d) Todas as afirmações estão corretas<br>
+e) Somente a afirmação ii) está correta</p>
+<hr>
+<ol start="2">
+<li>Ordenação.</li>
+</ol>
+<p>3)O Particionamento do vetor V é a operação que garante o estabelecimento da ordem entre os elementos em relação ao pivô escolhido. Complete o código dessa operação na implementação abaixo:</p>
+<p>static int particionamento(void* vetor[], int lim_i, int lim_f, TCompararQS comparar){<br>
+int ipivo = (lim_f+lim_i)/2;</p>
+<pre><code>void* pivo = vetor[ipivo];
+trocar(vetor, ipivo, lim_f);
+
+int i=lim_i;
+int j=lim_f-1;
+
+do{
+    while(____________________________}{
+        i++;
+    }
+    while(___________________________){ 
+        j--;
+    }
+
+    if (i&lt;j){
+        _____________________________
+        i++;j--;
+    }
+}while(i&lt;=j);
+__________________________;
+
+return i;
+</code></pre>
+<p>}</p>
+<p>linha : comparar(vetor[i],pivo) &lt; 0<br>
+linha : (j&gt;=lim_i) &amp;&amp; (comparar(vetor[j],pivo)&gt;=0)<br>
+linha : trocar(vetor,i,j);<br>
+linha : trocar(vetor,i,lim_f);</p>
+<pre><code>  : (comparar(vetor[i],pivo) &gt; 0) &amp;&amp; (i&lt;=lim_j)
+  : (j&lt;lim_i) &amp;&amp; (comparar(vetor[j],pivo)&lt;0)
+</code></pre>
+<p>Considere o seguinte vetor V=[3,1,9,7,15,10] que foi ordenado pelo algoritmo bolha e o seleção. Sobre essa ordenação podemos afirmar que:</p>
+<p>i) O algoritmo bolha, na sua versão mais elaborada, com apenas uma única passada pelo vetor V consegue ordena-lo, embora precise de de mais uma para detectar que a ordenação foi concluída.<br>
+ii) A ordenação por seleção realiza o maior número de comparações para concluir a tarefa, entre os dois algoritmos avaliados.<br>
+iii) Ambos os algoritmos apresentam desempenho similar para a instância apresentada e que é proporcional a O(n^2).</p>
+<p>a) as afirmações i e ii) estão corretas<br>
+b) somente a afirmação i) está correta<br>
+c) somente a afirmação ii) está correta<br>
+d) somente a afirmação iii) está correta<br>
+e) as afirmações iii) e i) estão corretas</p>
 
 </body>
 

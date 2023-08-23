@@ -19,7 +19,7 @@ style: |
 | -----------   | -----------   | ---            |
 | Carro         | automóvel, meio de transporte terrestre              |  nro rodas, cor, chasi, nro portas              |
 | Celular       |  aparelho de comunicação| cor, modelo, marca,  sistema operacional, cameras, memória,  operadora, tamanho da tela |
-| Lista         | agrupador de elementos |  Tamanho, Tipo de Informação, Tem ordenação, 
+| Lista         | agrupador de elementos |  Tamanho, estabelecer estado, estabelecer ordem
 
 
 
@@ -39,29 +39,57 @@ Uma lista $L$ com $n$ elementos tem as seguintes propriedades:
 
 
 ----
-# Lista Simplemente Encadeada
+# Lista Simplemente Encadeada (LSE)
 
-
-![width:600px center](imgs/representa.svg)
-
+<table>
+<tr>
+<td>Representação gráfica</td> <td> Codificação</td> 
+</tr>
+<tr>
+<td><img height=200pt src='imgs/representa.svg'></td>
+<td>
 
 ```C
+typedef struct elem_lse t_elemento_lse;
 typedef struct {
-    t_elemento_lse* inicio;
+    // end. do primeiro elemento
+    t_elemento_lse* primeiro;
+
+    // end. do último elemento
+    t_elemento_lse* ultimo;
+    
+    // tamanho da lista
     int tamanho;
 }t_lse;
 ```
+</td>
+</tr>
+</table>
+
 ---
 # Elemento da Lista
-![width:350px center](imgs/elemento_lse.svg)
-
+<table>
+<tr>
+<td>Representação gráfica</td> <td> Codificação</td> 
+</tr>
+<tr>
+<!--td>![width:350px](imgs/elemento_lse.svg)</td-->
+<td><img height=210pt src="imgs/elemento_lse.svg" alt> </td>
+<td> 
 
 ```C                                                        
- typedef struct elem_lse{                          
-    int cargautil;// carga util            
-    struct elem_lse* prox;// endereco prox 
- } t_elemento_lse;                                        
+ typedef struct elem_lse{
+    // carga útil
+    int cargautil; 
+
+    // endereço próximo elemento
+    struct elem_lse* prox; 
+ } t_elemento_lse;
  ```                                       
+
+</td>
+</tr>
+</table>
 
 ----
 # Caso de uso: Playlist de música 
@@ -74,6 +102,7 @@ typedef struct {
     * Quem deve sair em uma lista com as 10+ tocadas?
 
 ---
+
 # Operação Posicional: Inserir no **inicio**
 __Permite que um novo elemento seja inserido no -inicio- da Lista $L$ de elementos__
 1. Instanciar um novo elemento da lista
@@ -136,6 +165,11 @@ __Permite que o elemento com status de -último- da Lista $L$ seja removido__
 4. Retornar a informação copiada no passo anterior.
 
 ----
+
+# Outros tipos de Lista encadeada
+![center](imgs/outraslistas.svg)
+
+---
 # Acomplamento entre a ED e Tipos
 
     A lista criada até agora aceita apenas cargautil de valor inteiro
@@ -425,11 +459,83 @@ t_lse* criar_lse(t_imprimir_lse impressora, t_comparar_lse comparar){
 ![w:22cm center](imgs/visao-geral.svg)
 
 ---
-# Tipos Abstratos de Dados
+# Tipo Abstrato de Dado
 
 1. Definição
 2. Como são implementados
 3. Exemplos de uso
-4. 
 
-# 
+---
+# Contato
+
+- Ana Machado
+- apoiopedagogico@icomp.ufam.edu.br
+
+---
+# TAD, Definição
+
+ __Representação de um conceito do mundo real a partir de suas características e comportamentos__;
+
+## Como?
+- Um conjunto bem definido de operações (interface)
+- Ocultação da forma como essas características são representadas (encapsulamento);
+
+---
+
+# TAD, Representação Gráfica
+![bg w:28cm center](imgs/representaTAD.png)
+
+---
+# Exemplos de TAD
+1. Filas
+2. Pilhas
+3. Agenda
+4. Plano de ação
+5. Mapa geneológico
+
+---
+# TAD: Fila
+![bg w:17cm right](imgs/fila.png)
+
+## Definição
+
+__É um tipo de coleção linear onde os elementos são organizados segundo uma ordem.__
+
+## Políticas de gerenciamento
+
+- FIFO
+- Prioridade 
+- WFQ
+
+---
+# Fila FIFO
+- Inserções são feitas no final da fila;
+- Remoções são feitas no início da fila.
+- Primeiro retorna o elemento no início da fila. 
+
+---
+# Implementação de TADs
+
+1. Definir o conjunto de operações (interface) do TAD
+2. Escolher a Estrutura de Dados mais adequada
+
+3. Estabelecer pré-condições e pós-condições de cada interação com o TIPO
+
+## Exemplo: Inserir na Fila
+- Nome: enfileirar()
+- Pré-condição: Fila precisa existir
+- Pós-condição: Elemento inserido
+
+---
+# Vamos implementar TAD Fila;
+
+1. Interface?
+    1. enfileirar()
+    2. desenfileirar()
+    3. tamanho_fila()
+    4. primeiro_fila()
+    5. vazia_fila()
+    6. criar_fila(tamanho=0) 
+2.  ED?
+    1. ListaSE
+    2. Vetor(Cenas dos próximos Cap.)

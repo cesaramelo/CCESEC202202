@@ -20,7 +20,7 @@ static int particionamento(void* vetor[], int lim_i, int lim_f, TCompararQS comp
         while(comparar(vetor[i],pivo) < 0){
             i++;
         }
-        while( (j>=lim_i) && (comparar(vetor[j],pivo)>=0) ){ // detalhe
+        while( ){ // detalhe
             j--;
         }
 
