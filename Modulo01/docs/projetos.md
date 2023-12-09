@@ -1,6 +1,43 @@
 # Atividades
 Aqui você vai encontrar os enunciados de todos os trabalhos apresentados neste semestre.
 
+---
+# Atividade: LSE
+
+Nesta atividade você precisa implementar uma lista simplesmente encadeada (LSE) que armazena as seguintes informações em seus elementos:
+
+- Idade (inteiro)
+- Peso (real)
+- Altura (real)
+---
+## LSE: Operações
+
+A lista precisa implementar as seguintes operações:
+ - Criar a lista
+ - Inserir no final da lista
+ - Remover no inicio da lista
+ - Informar o tamanho da lista.
+
+
+## Operações e restrições
+ - criar 
+    - __Essa operação deve criar (instanciar) uma LSE vazia.__
+
+ - Inserir no final
+
+    - __Essa operação deve inserir um novo elemento no final da lista.__
+    - Garanta que a operação ocorra somente se a lista tenha sido criada
+ 
+- Remover do inicio
+    - __Essa operação deve remover um elemento no inicio da lista.__
+
+    - Garanta que a operação ocorra somente se ainda houve elementos na lista
+- Tamanho da lista
+    - __Essa operação deve retornar o número de elementos armazenado na lista__
+    - Garanta que a operação ocorra somente se a lista tiver sido criada
+
+
+
 # Uso de listas neutralizadas
 
 Neste trabalho você precisará implementar listas que serão capazes de armazenar um conjunto de dados gerado por diferentes sensores que detectam e registram os eventos em uma área monitorada.

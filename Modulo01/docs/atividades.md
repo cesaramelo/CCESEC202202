@@ -175,40 +175,5 @@ Um vetor __V__ de inteiros foi divido em duas partes indexadas pelas variávies 
 |--------------------                    |----- |---        |
 ![width:500px](imgs/vetor-intercalar.svg)|      |![width:500px](imgs/vetor-intercalar-res.svg)
 
----
-# Atividade: LSE
-
-Nesta atividade você precisa implementar uma lista simplesmente encadeada (LSE) que armazena as seguintes informações em seus elementos:
-
-- Idade (inteiro)
-- Peso (real)
-- Altura (real)
----
-# LSE: Operações
-
-A lista precisa implementar as seguintes operações:
- - Criar a lista
- - Inserir no final da lista
- - Remover no inicio da lista
- - Informar o tamanho da lista.
----
-# Operações e restrições
- - criar 
-    - __Essa operação deve criar (instanciar) uma LSE vazia.__
-
- - Inserir no final
-
-    - __Essa operação deve inserir um novo elemento no final da lista.__
-    - Garanta que a operação ocorra somente se a lista tenha sido criada
- 
----
-# Operações e restrições (II)
-- Remover do inicio
-    - __Essa operação deve remover um elemento no inicio da lista.__
-
-    - Garanta que a operação ocorra somente se ainda houve elementos na lista
-- Tamanho da lista
-    - __Essa operação deve retornar o número de elementos armazenado na lista__
-    - Garanta que a operação ocorra somente se a lista tiver sido criada
 
 
