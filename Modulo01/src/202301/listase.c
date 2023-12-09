@@ -15,7 +15,7 @@ t_elemento_lse* criar_elemento_lse(void* carga_util){
     novo->carga_util = carga_util;
     novo->prox = NULL;
 
-    printf("Criando: %p %p %p\n", novo, novo->carga_util, novo->prox);
+    //printf("Criando: %p %p %p\n", novo, novo->carga_util, novo->prox);
 
     return novo;
 }
@@ -67,7 +67,7 @@ void inserir_final_lse(t_lse* lse, void* carga_util){
 
 }
 
-void* remover_lse(t_lse* lse){
+void* remover_inicio_lse(t_lse* lse){
     void* carga_util = NULL;
     t_elemento_lse *removivel = lse->inicio;
     if (lse->inicio != NULL){
@@ -78,6 +78,35 @@ void* remover_lse(t_lse* lse){
     }
     return carga_util;
 }
+
+void* remover_lse(t_lse* lse, void* chave){
+    t_elemento_lse* cam = lse->inicio;
+    t_elemento_lse* ant = NULL;
+    
+    while( (cam!=NULL) && (lse->comparar(cam->carga_util , chave)!=0)){
+        ant = cam;
+        cam = cam->prox;
+    }
+
+    void* carga = NULL;
+    if (cam != NULL){
+        carga = cam->carga_util;
+        if (cam == lse->inicio){ // inicio?
+            lse->inicio = cam->prox;
+            if (cam->prox == NULL)
+                lse->fim=NULL;
+        }else{
+            ant->prox = cam->prox;
+            if (cam->prox == NULL)
+                lse->fim = ant;
+        }
+        free(cam);
+        lse->tamanho--;
+    }
+    return carga; 
+
+}
+
 
 void* acessar_lse(t_lse* lse, int pos){
     pos = (pos>lse->tamanho?pos%lse->tamanho:pos);
@@ -101,4 +130,16 @@ void imprimir_lse(t_lse *lse){
         lse->imprimir(cam->carga_util);
         cam = cam->prox;
     }
+}
+
+void* buscar_lse(t_lse* lse, void* chave){
+    t_elemento_lse* cam=lse->inicio;
+
+    while( (cam!=NULL) && (lse->comparar(cam->carga_util, chave)!=0)){
+        cam = cam->prox;
+    }
+    if (cam != NULL)
+        return cam->carga_util;
+    else
+        return NULL;
 }

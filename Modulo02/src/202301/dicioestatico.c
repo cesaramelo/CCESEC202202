@@ -33,7 +33,7 @@ void inserir_de(t_de* de, int chave, void* carga){
 
 }
 
-void* buscar_de(t_de *de, int chave){
+static int bb_de(t_de *de, int chave){
     //busca_binaria
     int lim_i = 0;
     int lim_s = ocupacao_vd(de->vd);
@@ -42,12 +42,33 @@ void* buscar_de(t_de *de, int chave){
         int pos = (lim_i+lim_s)/2;
         t_elem_de* e = acessar_vd(de->vd, pos);
         if (e->chave == chave){
-            return e->carga;
+            return pos;
         }else if(e->chave > chave){
             lim_s = pos-1;
         }else{
             lim_i = pos+1;
         }
+    }
+    return -1;    
+}
+
+void* buscar_de(t_de *de, int chave){
+    //busca_binaria
+    int pos = bb_de(de, chave);
+
+    if (pos>=0){
+        t_elem_de* e = acessar_vd(de->vd, pos);
+        return e->carga;
+    }
+    return NULL;
+}
+
+void* remover_de(t_de* de, int chave){
+    //busca_binaria
+    int pos = bb_de(de, chave);
+    if (pos>=0){
+        t_elem_de* e = remover_vd(de->vd, pos);
+        return e->carga;
     }
     return NULL;
 }

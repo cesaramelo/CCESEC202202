@@ -4,6 +4,112 @@ title: Atividade com Vetor
 author: César Melo
 theme: gaia
 ---
+# Variáveis
+
+def. __Uma variável representa um conceito presente no contexto em que a rotina computacional está sendo implementada.__
+
+Ex. __idade, nota, matricula__
+
+- Uma variável possui 
+    - tipo;
+    - nome;
+    - escopo (local, global)
+---
+# Declaração das variáveis
+Sintaxe geral: 
+```C
+<tipo> <nome_variável>
+```
+Exemplo:
+```C
+int idade;
+double nota;
+char nome[60];
+```
+
+---
+# Mais sobre variável
+
+- Pelo nome acessamos o valor associado
+
+```C 
+printf("%d", idade);
+printf("%s", nome);
+printf("%.2lf", nota);
+```
+
+- Pelo nome acessamos o endereço de memória associado (operador unário __&__ )
+
+```C
+printf("%p", &idade);
+printf("%p", &nome);
+printf("%p", &nota);
+```
+---
+# Escopos de variáveis
+arquivo.c
+```C
+double media;
+
+void calcular_media(double nota_1, double nota_2){
+    media = (nota_1+nota_2)/2.0
+    if ((media > 7.8) && (media < 8.0)){
+        media = 8.0
+    }
+}
+int main(){
+    double nota_1, nota_2, media=10.0;
+    calcular_media(8.0,8.5);
+    printf("%.2lf %lf %lf", media, nota_1, nota_2);
+}
+```
+---
+# Declarações de variáveis
+```C
+double nota; // reserva memória e associa o nome.
+
+double* p_nota; // reserva memória e associa nome.
+
+nota = 9.0; // atribui valor
+p_nota = &nota; // atribui valor (endereço da variável)
+
+printf("%lf\n", nota); // qual é o valor?
+printf("%p\n", p_nota);
+printf("%lf\n", *p_nota);
+
+```
+---
+# Alocação dinâmica de memória
+- Variável anônima
+    - criada em tempo de execução;
+    - apenas o seu endereço é conhecido
+- Declaração  
+    - malloc();
+    - manipulação via ponteiros;
+- Ponteiros são variáveis ``especiais'''
+    - int* p_idade;
+    - double* p_nota;
+---
+Exemplos:
+```C
+#include "stdlib.h""
+
+int* criar_variavel(){
+    return malloc(sizeof(int));
+}
+
+int main(){
+    int* p = criar_variavel();
+
+    p = 10;
+    *p = 10;
+    printf("%d", p);
+    printf("%p", *p);
+    printf("%d", *p);
+}
+``````
+
+___
 # Vetores
 
 __Definição__. Variável composta Homogênea que agrupa valores de um __mesmo tipo__ sob a referência de um único __nome__.
@@ -69,30 +175,40 @@ Um vetor __V__ de inteiros foi divido em duas partes indexadas pelas variávies 
 |--------------------                    |----- |---        |
 ![width:500px](imgs/vetor-intercalar.svg)|      |![width:500px](imgs/vetor-intercalar-res.svg)
 
-
 ---
-# Atividade: LSE Operações posicionais
+# Atividade: LSE
 
-Implementar as operações de __remoção__ do inicio da lista e no final da lista.
-1. Remover do __inicio__
-    * Redefine o inicio da lista;
-    * Remove o __elemento__ mas retorna a __carga útil__;
-2. Remover do Final.
-    * Redefine quem é o elemento na última posição da lista;
-    * Descobrir quem são os elementos das seguintes posições: última e a penultima;
+Nesta atividade você precisa implementar uma lista simplesmente encadeada (LSE) que armazena as seguintes informações em seus elementos:
+
+- Idade (inteiro)
+- Peso (real)
+- Altura (real)
 ---
-# Atividade: LSE Operações posicionais (Particularidades)
-1. Lista vazia?
-    * Como caracterizar esse estado.
-2. Remoção do elemento no final da lista pode tornar a lista vazia.
-    * O que fazer?
+# LSE: Operações
 
-----
-# Atividade: Generalização.
+A lista precisa implementar as seguintes operações:
+ - Criar a lista
+ - Inserir no final da lista
+ - Remover no inicio da lista
+ - Informar o tamanho da lista.
+---
+# Operações e restrições
+ - criar 
+    - __Essa operação deve criar (instanciar) uma LSE vazia.__
+
+ - Inserir no final
+
+    - __Essa operação deve inserir um novo elemento no final da lista.__
+    - Garanta que a operação ocorra somente se a lista tenha sido criada
+ 
+---
+# Operações e restrições (II)
+- Remover do inicio
+    - __Essa operação deve remover um elemento no inicio da lista.__
+
+    - Garanta que a operação ocorra somente se ainda houve elementos na lista
+- Tamanho da lista
+    - __Essa operação deve retornar o número de elementos armazenado na lista__
+    - Garanta que a operação ocorra somente se a lista tiver sido criada
 
 
-----
-# Lista: 
-
-----
-# 
